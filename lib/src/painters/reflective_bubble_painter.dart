@@ -13,8 +13,8 @@ class ReflectiveBubblePainter extends StatelessWidget {
   final PopPopBubbleTheme themeModel;
 
   const ReflectiveBubblePainter({
-    Key key,
-    @required this.themeModel,
+    Key? key,
+    required this.themeModel,
   }) : super(key: key);
 
   @override
@@ -29,14 +29,14 @@ class ReflectiveBubblePainter extends StatelessWidget {
 class _Painter extends CustomPainter {
   final PopPopBubbleTheme themeModel;
 
-  const _Painter({this.themeModel});
+  const _Painter({required this.themeModel});
 
   @override
   void paint(Canvas canvas, Size size) {
-    var painterSize = (size.height * 0.9) - themeModel.strokeWidth;
+    final painterSize = (size.height * 0.9) - themeModel.strokeWidth;
 
-    var center = size.center(Offset.zero);
-    var offset = size.height * 0.05;
+    final center = size.center(Offset.zero);
+    final offset = size.height * 0.05;
 
     // base bubble layer
     canvas.drawCircle(

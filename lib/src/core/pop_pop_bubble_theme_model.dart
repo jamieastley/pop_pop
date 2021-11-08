@@ -20,13 +20,13 @@ class PopPopBubbleTheme {
   });
 
   PopPopBubbleTheme copyWith({
-    Color gridBackgroundColor,
-    Color bubbleBaseColor,
-    Color bubbleBodyColor,
-    Color bubbleRimColor,
-    Color poppedBubbleBaseColor,
-    double size,
-    double strokeWidth,
+    Color? gridBackgroundColor,
+    Color? bubbleBaseColor,
+    Color? bubbleBodyColor,
+    Color? bubbleRimColor,
+    Color? poppedBubbleBaseColor,
+    double? size,
+    double? strokeWidth,
   }) {
     return PopPopBubbleTheme(
       gridBackgroundColor: gridBackgroundColor ?? this.gridBackgroundColor,

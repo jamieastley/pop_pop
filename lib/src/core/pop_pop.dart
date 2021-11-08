@@ -23,13 +23,13 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   Stream<int> get currentScoreStream;
 
   /// Color theme of each of the game elements.
-  final PopPopBubbleTheme bubbleTheme;
+  final PopPopBubbleTheme? bubbleTheme;
 
   /// Audio interface that is responsible for game sounds effects.
-  final PopPopAudio audioPlayer;
+  final PopPopAudio? audioPlayer;
 
   /// Optional timer interface for timed game modes.
-  final PopPopTimer<T> timer;
+  final PopPopTimer<T>? timer;
 
   /// Enable library debug logging.
   final bool isLoggingEnabled;
@@ -50,9 +50,9 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   /// Required for the [BubblePopGame] to determine when to regenerate
   /// new bubbles based off the users' score.
   void cacheGameSizes({
-    int horizontalCount,
-    int verticalCount,
-    double bottomOffset,
+    required int horizontalCount,
+    required int verticalCount,
+    required double bottomOffset,
     bool isStaggered = true,
   });
 
