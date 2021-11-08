@@ -1,0 +1,21 @@
+name: pop_pop
+description: Flexible and extendable components to build a bubble pop game in Flutter.
+version: 1.0.0
+homepage: https://github.com/jamieastley/pop_pop
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  rxdart: 0.24.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^4.1.2
+  pedantic: ^1.9.2
+
+flutter:
