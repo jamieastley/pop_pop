@@ -23,7 +23,7 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   Stream<int> get currentScoreStream;
 
   /// Color theme of each of the game elements.
-  final PopPopBubbleTheme? bubbleTheme;
+  final PopPopBubbleTheme bubbleTheme;
 
   /// Audio interface that is responsible for game sounds effects.
   final PopPopAudio? audioPlayer;
@@ -39,7 +39,7 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   /// Provides the basic building blocks the game depends on,
   /// allowing implementation with any state management solution.
   const PopPop({
-    this.bubbleTheme,
+    required this.bubbleTheme,
     this.audioPlayer,
     this.timer,
     this.isLoggingEnabled = false,

@@ -10,8 +10,8 @@ class PopPopReadyState extends PopPopState {
   const PopPopReadyState();
 }
 
-class GameFinishedState extends PopPopState {
+class PopPopFinishedState extends PopPopState {
   final int totalScore;
 
-  const GameFinishedState({this.totalScore = 0});
+  const PopPopFinishedState({this.totalScore = 0});
 }
