@@ -1,6 +1,6 @@
-import 'package:pop_pop/src/core/pop_pop_audio.dart';
-import 'package:pop_pop/src/core/pop_pop_state.dart';
-import 'package:pop_pop/src/core/pop_pop_timer.dart';
+import 'package:pop_pop/src/pop_pop_audio.dart';
+import 'package:pop_pop/src/pop_pop_state.dart';
+import 'package:pop_pop/src/pop_pop_timer.dart';
 
 import 'pop_pop_bubble_theme_model.dart';
 
