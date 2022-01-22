@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
 
 /// An optional timer to implement if a stopwatch or countdown timer
-/// is required for [BubblePopGame] implementations.
+/// is required for [PopPop] implementations.
 abstract class PopPopTimer<T extends Object> {
   /// [Stream] to listen to that emits time updates.
   Stream<T> get countdownTimerStream;
@@ -10,9 +10,9 @@ abstract class PopPopTimer<T extends Object> {
   final int seconds;
 
   /// Sets whether the lib should print debug logs.
-  final bool loggingEnabled;
+  final bool enableLogging;
 
-  const PopPopTimer({@required this.seconds, this.loggingEnabled = false});
+  const PopPopTimer({required this.seconds, this.enableLogging = false});
 
   /// Starts the timer countdown.
   void startTimer();
@@ -27,5 +27,5 @@ abstract class PopPopTimer<T extends Object> {
   void restartTimer();
 
   /// Close streams and clean up resources.
-  void dispose();
+  FutureOr<void> dispose();
 }

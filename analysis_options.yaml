@@ -1,8 +1,0 @@
-include: package:pedantic/analysis_options.1.9.0.yaml
-analyzer:
-  strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
-  errors:
-    todo: ignore
-    missing_required_param: error

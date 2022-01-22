@@ -1,6 +1,6 @@
-import 'package:pop_pop/src/core/pop_pop_audio.dart';
-import 'package:pop_pop/src/core/pop_pop_state.dart';
-import 'package:pop_pop/src/core/pop_pop_timer.dart';
+import 'package:pop_pop/src/pop_pop_audio.dart';
+import 'package:pop_pop/src/pop_pop_state.dart';
+import 'package:pop_pop/src/pop_pop_timer.dart';
 
 import 'pop_pop_bubble_theme_model.dart';
 
@@ -26,10 +26,10 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   final PopPopBubbleTheme bubbleTheme;
 
   /// Audio interface that is responsible for game sounds effects.
-  final PopPopAudio audioPlayer;
+  final PopPopAudio? audioPlayer;
 
   /// Optional timer interface for timed game modes.
-  final PopPopTimer<T> timer;
+  final PopPopTimer<T>? timer;
 
   /// Enable library debug logging.
   final bool isLoggingEnabled;
@@ -39,7 +39,7 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   /// Provides the basic building blocks the game depends on,
   /// allowing implementation with any state management solution.
   const PopPop({
-    this.bubbleTheme,
+    required this.bubbleTheme,
     this.audioPlayer,
     this.timer,
     this.isLoggingEnabled = false,
@@ -50,9 +50,9 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   /// Required for the [BubblePopGame] to determine when to regenerate
   /// new bubbles based off the users' score.
   void cacheGameSizes({
-    int horizontalCount,
-    int verticalCount,
-    double bottomOffset,
+    required int horizontalCount,
+    required int verticalCount,
+    required double bottomOffset,
     bool isStaggered = true,
   });
 

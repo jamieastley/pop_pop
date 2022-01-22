@@ -1,3 +1,3 @@
-## [1.0.0] - 3rd November 2021
+## [1.0.0-alpha.1] - 21st January 2022
 
 * Initial migration from internal package.

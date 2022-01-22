@@ -1,12 +1,3 @@
 # pop_pop
 
-Flexible and extendable components to build a bubble pop game in Flutter.
-
-## Getting Started
-
-* Add to your `pubspec.yaml`:
-```yaml
-dependencies:
-  
-  pop_pop: <version>
-```
+A collection of packages which provide both the building blocks and prebuilt components to create a bubble popping game in Flutter.
