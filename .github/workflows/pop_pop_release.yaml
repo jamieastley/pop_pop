@@ -32,7 +32,18 @@ jobs:
           PUB_DEV_PUBLISH_EXPIRATION: ${{ secrets.PUB_DEV_PUBLISH_EXPIRATION }}
         run: |
           sh ../../tools/create_credentials.sh
+
       - name: Check Publish Warnings
         run: pub publish --dry-run
+        id: pubDryRun
+
       - name: Publish Package
         run: pub publish -f
+        if: steps.pubDryRun.outputs.exit_code == 0
+        id: pubPublish
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: steps.pubPublish.outputs.exit_code == 0
+        with:
+          generate_release_notes: true
