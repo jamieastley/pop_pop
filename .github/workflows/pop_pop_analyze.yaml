@@ -12,7 +12,7 @@ on:
       - ".github/workflows/pop_pop.yaml"
 
 jobs:
-  build:
+  analyze:
     defaults:
       run:
         working-directory: packages/pop_pop
