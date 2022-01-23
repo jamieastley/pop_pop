@@ -1,12 +1,10 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pop_pop/pop_pop.dart';
 import 'package:pop_pop_components/src/painters/reflective_bubble_painter.dart';
 
 void main() {
-  const size = 40.0;
+  const size = 100.0;
   const model = PopPopBubbleTheme(size: size);
 
   group('ReflectiveBubblePainter:', () {
@@ -32,7 +30,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final pos = tester.getRect(find.byKey(key));
-      print('Found $key at ${pos.toString()}');
+      debugPrint('Found $key at ${pos.toString()}');
       final leftPos = pos.left.floor();
       final rightPos = pos.right.floor();
       final topPos = pos.top.floor();
@@ -49,6 +47,20 @@ void main() {
 
       expect(bottomPos, greaterThanOrEqualTo(size));
       expect(bottomPos, lessThanOrEqualTo(size));
+    });
+
+    testWidgets('Golden test', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: ReflectiveBubblePainter(themeModel: model),
+          ),
+        ),
+      );
+      await expectLater(
+          find.byType(ReflectiveBubblePainter),
+          matchesGoldenFile(
+              '../goldens/painters/reflective_bubble_painter.png'));
     });
   });
 }
