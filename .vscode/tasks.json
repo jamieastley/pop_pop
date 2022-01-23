@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "sh",
+			"args": [
+				"tools/bump_version.sh",
+				"pop_pop",
+			],
+			"group": "none",
+			"label": "Bump version: pop_pop"
+		},
+	]
+}
