@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pop_pop_components/src/components/pop_pop_grid.dart';
 
-class DummyBubble extends StatefulWidget {
+class _DummyBubble extends StatefulWidget {
   final String unpoppedKeyString;
   final String poppedKeyString;
 
   final double size;
 
-  const DummyBubble({
+  const _DummyBubble({
     required this.size,
     required this.unpoppedKeyString,
     required this.poppedKeyString,
@@ -19,7 +19,7 @@ class DummyBubble extends StatefulWidget {
   _DummyBubbleState createState() => _DummyBubbleState();
 }
 
-class _DummyBubbleState extends State<DummyBubble> {
+class _DummyBubbleState extends State<_DummyBubble> {
   bool isPopped = false;
 
   @override
@@ -60,7 +60,7 @@ void main() {
             home: PopPopGrid(
               controller: ScrollController(),
               onGridInit: (horizontalCount, verticalCount, bottomOffset) {},
-              onGenerateBubble: (_) => const DummyBubble(
+              onGenerateBubble: (_) => const _DummyBubble(
                 size: bubbleSize,
                 poppedKeyString: '',
                 unpoppedKeyString: '',
@@ -80,7 +80,7 @@ void main() {
           : (totalColumnChildren + 1) / 2;
       final total = (totalRowChildren * totalColumnChildren) - staggeredOffset;
       debugPrint('Total bubble count should be $total');
-      expect(find.byType(DummyBubble, skipOffstage: true),
+      expect(find.byType(_DummyBubble, skipOffstage: true),
           findsNWidgets(total.toInt()));
 
       addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
@@ -103,7 +103,7 @@ void main() {
                 debugPrint(
                     'Horizontal: $horizontalCount, vertical: $verticalCount, bottomOffset: $bottomOffset');
               },
-              onGenerateBubble: (gridPosition) => DummyBubble(
+              onGenerateBubble: (gridPosition) => _DummyBubble(
                 key: ValueKey(gridPosition),
                 size: bubbleSize,
                 poppedKeyString: '',
@@ -125,7 +125,7 @@ void main() {
           : (totalColumnChildren + 1) / 2;
       final total = (totalRowChildren * totalColumnChildren) - staggeredOffset;
       debugPrint('Total bubble count should be $total');
-      expect(find.byType(DummyBubble, skipOffstage: true),
+      expect(find.byType(_DummyBubble, skipOffstage: true),
           findsNWidgets(total.toInt()));
 
       addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
@@ -147,7 +147,7 @@ void main() {
               debugPrint(
                   'Horizontal: $horizontalCount, vertical: $verticalCount, bottomOffset: $bottomOffset');
             },
-            onGenerateBubble: (gridPosition) => DummyBubble(
+            onGenerateBubble: (gridPosition) => _DummyBubble(
               size: bubbleSize,
               unpoppedKeyString: 'Bubble-$gridPosition',
               poppedKeyString: 'PoppedBubble-$gridPosition',
@@ -196,7 +196,7 @@ void main() {
                   'Horizontal: $horizontalCount, vertical: $verticalCount, bottomOffset: $bottomOffset');
               scrollDistance = height;
             },
-            onGenerateBubble: (gridPosition) => DummyBubble(
+            onGenerateBubble: (gridPosition) => _DummyBubble(
               size: bubbleSize,
               unpoppedKeyString: 'Bubble-$gridPosition',
               poppedKeyString: 'PoppedBubble-$gridPosition',
