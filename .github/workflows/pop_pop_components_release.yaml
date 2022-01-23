@@ -1,4 +1,4 @@
-name: pop_pop_components_release
+name: pop_pop_components
 
 on:
   push:
