@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  strong-mode:
+    implicit-dynamic: false
+    implicit-casts: false
+  errors:
+    todo: ignore
+    missing_required_param: error
+linter:
+  rules:
+    - constant_identifier_names
