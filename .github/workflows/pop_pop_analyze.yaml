@@ -2,6 +2,8 @@ name: pop_pop
 
 on:
   push:
+    branches:
+      - "master"
     paths:
       - "packages/pop_pop/**"
       - ".github/workflows/pop_pop.yaml"
@@ -12,7 +14,7 @@ on:
       - ".github/workflows/pop_pop.yaml"
 
 jobs:
-  build:
+  analyze:
     defaults:
       run:
         working-directory: packages/pop_pop

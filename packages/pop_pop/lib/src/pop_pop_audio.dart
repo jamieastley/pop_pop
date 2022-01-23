@@ -27,7 +27,7 @@ abstract class PopPopAudio {
   /// Should fallback to use the `defaultFilePath` (eg. this can be your bubble pop
   /// sound effect), if `filePath` is `null`, otherwise provide a `filePath` value if you
   /// desire additional game sound effects.
-  FutureOr<void> playSoundEffect(String? filePath);
+  FutureOr<void> playSoundEffect({String? filePath});
 
   /// Dispose of and clean up any audio player resources.
   FutureOr<void> dispose();
