@@ -2,45 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pop_pop_components/src/components/pop_pop_grid.dart';
 
-class _DummyBubble extends StatefulWidget {
-  final String unpoppedKeyString;
-  final String poppedKeyString;
-
-  final double size;
-
-  const _DummyBubble({
-    required this.size,
-    required this.unpoppedKeyString,
-    required this.poppedKeyString,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _DummyBubbleState createState() => _DummyBubbleState();
-}
-
-class _DummyBubbleState extends State<_DummyBubble> {
-  bool isPopped = false;
-
-  @override
-  Widget build(BuildContext context) => SizedBox(
-        height: widget.size,
-        width: widget.size,
-        child: ElevatedButton(
-          key: isPopped
-              ? ValueKey(widget.poppedKeyString)
-              : ValueKey(widget.unpoppedKeyString),
-          onPressed: () {
-            setState(() => isPopped = true);
-          },
-          child: SizedBox(
-            height: widget.size,
-            width: widget.size,
-          ),
-        ),
-      );
-}
-
 void main() {
   const bubbleSize = 60.0;
 
@@ -60,7 +21,7 @@ void main() {
             home: PopPopGrid(
               controller: ScrollController(),
               onGridInit: (horizontalCount, verticalCount, bottomOffset) {},
-              onGenerateBubble: (_) => const _DummyBubble(
+              onGenerateBubble: (_, __) => const _DummyBubble(
                 size: bubbleSize,
                 poppedKeyString: '',
                 unpoppedKeyString: '',
@@ -103,8 +64,8 @@ void main() {
                 debugPrint(
                     'Horizontal: $horizontalCount, vertical: $verticalCount, bottomOffset: $bottomOffset');
               },
-              onGenerateBubble: (gridPosition) => _DummyBubble(
-                key: ValueKey(gridPosition),
+              onGenerateBubble: (sliverIndex, rowIndex) => _DummyBubble(
+                key: ValueKey('$sliverIndex-$rowIndex'),
                 size: bubbleSize,
                 poppedKeyString: '',
                 unpoppedKeyString: '',
@@ -147,10 +108,10 @@ void main() {
               debugPrint(
                   'Horizontal: $horizontalCount, vertical: $verticalCount, bottomOffset: $bottomOffset');
             },
-            onGenerateBubble: (gridPosition) => _DummyBubble(
+            onGenerateBubble: (sliverIndex, rowIndex) => _DummyBubble(
               size: bubbleSize,
-              unpoppedKeyString: 'Bubble-$gridPosition',
-              poppedKeyString: 'PoppedBubble-$gridPosition',
+              unpoppedKeyString: 'Bubble-$sliverIndex-$rowIndex',
+              poppedKeyString: 'PoppedBubble-$sliverIndex-$rowIndex',
             ),
             bubbleSize: bubbleSize,
           ),
@@ -196,10 +157,10 @@ void main() {
                   'Horizontal: $horizontalCount, vertical: $verticalCount, bottomOffset: $bottomOffset');
               scrollDistance = height;
             },
-            onGenerateBubble: (gridPosition) => _DummyBubble(
+            onGenerateBubble: (sliverIndex, rowIndex) => _DummyBubble(
               size: bubbleSize,
-              unpoppedKeyString: 'Bubble-$gridPosition',
-              poppedKeyString: 'PoppedBubble-$gridPosition',
+              unpoppedKeyString: 'Bubble-$sliverIndex-$rowIndex',
+              poppedKeyString: 'PoppedBubble-$sliverIndex-$rowIndex',
             ),
             bubbleSize: bubbleSize,
           ),
@@ -234,4 +195,43 @@ Future<void> _popBubble({
   debugPrint('Tapping bubble with key: ${key.toString()}');
   await tester.tap(find.byKey(key));
   await tester.pump();
+}
+
+class _DummyBubble extends StatefulWidget {
+  final String unpoppedKeyString;
+  final String poppedKeyString;
+
+  final double size;
+
+  const _DummyBubble({
+    required this.size,
+    required this.unpoppedKeyString,
+    required this.poppedKeyString,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _DummyBubbleState createState() => _DummyBubbleState();
+}
+
+class _DummyBubbleState extends State<_DummyBubble> {
+  bool isPopped = false;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        height: widget.size,
+        width: widget.size,
+        child: ElevatedButton(
+          key: isPopped
+              ? ValueKey(widget.poppedKeyString)
+              : ValueKey(widget.unpoppedKeyString),
+          onPressed: () {
+            setState(() => isPopped = true);
+          },
+          child: SizedBox(
+            height: widget.size,
+            width: widget.size,
+          ),
+        ),
+      );
 }

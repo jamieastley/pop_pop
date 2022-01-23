@@ -10,6 +10,7 @@ class MockTimer extends Mock implements PopPopTimer<int> {}
 class MockAudio extends Mock implements PopPopAudioPlayer {}
 
 void main() {
+  late PopPopBloc bloc;
   final PopPopTimer<int> timer = MockTimer();
   final PopPopAudioPlayer audioPlayer = MockAudio();
 
@@ -21,13 +22,14 @@ void main() {
   });
 
   tearDown(() {
+    bloc.dispose();
     reset(timer);
     reset(audioPlayer);
   });
 
   group('BubblePopBloc:', () {
     test('Validate score increments and audio invocation on pop', () async {
-      final bloc = PopPopBloc(
+      bloc = PopPopBloc(
         loggingEnabled: true,
         timer: timer,
         audioPlayer: audioPlayer,
@@ -51,7 +53,7 @@ void main() {
     });
 
     test('Emits correct states when starting game', () async {
-      final bloc = PopPopBloc(
+      bloc = PopPopBloc(
         loggingEnabled: true,
         timer: timer,
         audioPlayer: audioPlayer,
@@ -76,8 +78,8 @@ void main() {
       bloc.restartGame();
     });
 
-    test('Verify game dimensions are captured', () async {
-      final bloc = PopPopBloc(
+    test('Verify game dimensions when isStaggered is true', () async {
+      bloc = PopPopBloc(
         loggingEnabled: true,
         timer: timer,
         audioPlayer: audioPlayer,
@@ -93,6 +95,23 @@ void main() {
       expect(bloc.gridSize, equals(22));
 
       debugPrint('Verifying 5 * column children height sets screenHeight');
+      expect(bloc.scrollOffset, equals(300.0));
+    });
+
+    test('Verify game dimensions when isStaggered is false', () async {
+      bloc = PopPopBloc(
+        loggingEnabled: true,
+        timer: timer,
+        audioPlayer: audioPlayer,
+        onAllPopped: (scrollDistance) {},
+      )..cacheGameSizes(
+          horizontalCount: 5,
+          verticalCount: 5,
+          bottomOffset: 0,
+          isStaggered: false,
+        );
+
+      expect(bloc.gridSize, equals(25));
       expect(bloc.scrollOffset, equals(300.0));
     });
   });
