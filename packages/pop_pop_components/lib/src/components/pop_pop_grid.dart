@@ -1,10 +1,8 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 
 enum PopPopGridMode { straight, staggered }
 
-typedef OnGenerateBubbleWidget = Widget Function(String gridPosition);
+typedef OnGenerateBubbleWidget = Widget Function(int sliverIndex, int rowIndex);
 
 typedef OnGridInit = void Function(
     int horizontalCount, int verticalCount, double bottomOffset);
@@ -33,6 +31,23 @@ class PopPopGrid extends StatelessWidget {
   /// wrap generatopm, if desired.
   final Axis scrollDirection;
 
+  /// Creates a [PopPopGrid].
+  ///
+  /// The game grid can either be staggered to replicate bubble wrap,
+  /// or straight and rigid by defining the `gridMode` argument.
+  ///
+  /// [onGenerateBubble] allows you to either use the provided bubble implementations,
+  /// or create your own bubble widget and handle tapping callbacks yourself.
+  ///
+  /// ```dart
+  /// PopPopGrid(
+  ///   onGridInit: (horizontalCount, verticalCount, bottomOffset) {
+  ///     // handle grid initialization
+  ///   }
+  ///   controller: controller,
+  ///   onGenerateBubble: (key) => ProviderBubble(keySuffix: key),
+  /// )
+  /// ```
   const PopPopGrid({
     Key? key,
     required this.onGenerateBubble,
@@ -47,7 +62,7 @@ class PopPopGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        print(
+        debugPrint(
             'Available constraints: ${constraints.maxWidth.floor()}w : ${constraints.maxHeight.floor()}h');
         final columnChildrenCount =
             (constraints.maxHeight / bubbleSize).floor();
@@ -90,7 +105,7 @@ class PopPopGrid extends StatelessWidget {
                           children: List<Widget>.generate(
                             (rowChildrenCount - 1),
                             (columnIndex) =>
-                                onGenerateBubble('$listViewIndex-$columnIndex'),
+                                onGenerateBubble(listViewIndex, columnIndex),
                           ),
                         ),
                       ),
@@ -107,7 +122,7 @@ class PopPopGrid extends StatelessWidget {
                           children: List<Widget>.generate(
                             rowChildrenCount,
                             (columnIndex) =>
-                                onGenerateBubble('$listViewIndex-$columnIndex'),
+                                onGenerateBubble(listViewIndex, columnIndex),
                           ),
                         ),
                       ),

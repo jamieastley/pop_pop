@@ -152,7 +152,8 @@ class _BuildGameReadyState extends StatelessWidget {
                   bottomOffset: bottomOffset,
                 ),
                 controller: controller,
-                onGenerateBubble: (key) => ProviderBubble(keySuffix: key),
+                onGenerateBubble: (sliverIndex, rowIndex) =>
+                    ProviderBubble(keySuffix: '$sliverIndex-$rowIndex'),
               ),
             ),
           ),

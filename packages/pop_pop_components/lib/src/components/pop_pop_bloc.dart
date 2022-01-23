@@ -15,8 +15,6 @@ class PopPopBloc extends PopPop<PopPopState, int> {
   final _gameState =
       BehaviorSubject<PopPopState>.seeded(const InitialPopPopState());
 
-  // final _timerState = BehaviorSubject<String>.seeded('--:--');
-
   final _scoreState = BehaviorSubject<int>.seeded(0);
 
   @visibleForTesting
@@ -27,9 +25,6 @@ class PopPopBloc extends PopPop<PopPopState, int> {
 
   @override
   Stream<PopPopState> get gameStateStream => _gameState.stream;
-
-  // @override
-  // Stream<int> get timerStateStream => _timerState.stream;
 
   @override
   Stream<int> get currentScoreStream => _scoreState;
@@ -63,8 +58,7 @@ class PopPopBloc extends PopPop<PopPopState, int> {
     var newScore = (_scoreState.value + 1);
     _scoreState.add(newScore);
     _log('Popped ${newScore % gridSize}/$gridSize bubbles.');
-    if (newScore % 2 == 0) {
-      // if (newScore % gridSize == 0) {
+    if (newScore % gridSize == 0) {
       onAllPopped.call(scrollOffset);
     }
   }
@@ -105,9 +99,7 @@ class PopPopBloc extends PopPop<PopPopState, int> {
     _gameState.add(const PopPopReadyState());
     timer?.startTimer();
     timer?.countdownTimerStream.listen((int event) {
-      if (event > 0) {
-        // _timerState.add(event.formatTimeString);
-      } else {
+      if (event == 0) {
         _gameState.add(PopPopFinishedState(totalScore: _scoreState.value));
       }
     });
@@ -115,8 +107,7 @@ class PopPopBloc extends PopPop<PopPopState, int> {
 
   void _log(String message) {
     if (isLoggingEnabled) {
-      // ignore: avoid_print
-      print('$this $message');
+      debugPrint('$this $message');
     }
   }
 
@@ -125,22 +116,10 @@ class PopPopBloc extends PopPop<PopPopState, int> {
     audioPlayer?.dispose();
     timer?.dispose();
     _gameState.close();
-    // _timerState?.close();
     _scoreState.close();
     _log('disposed.');
   }
 
   @override
   String toString() => '::PopPopBloc::';
-}
-
-extension FormatAsTime on int {
-  String toFormattedTimeString() {
-    final currentVal = (this);
-    final minutesStr =
-        ((currentVal / 60) % 60).floor().toString().padLeft(2, '0');
-    final secondsStr = (currentVal % 60).floor().toString().padLeft(2, '0');
-
-    return '$minutesStr:$secondsStr';
-  }
 }

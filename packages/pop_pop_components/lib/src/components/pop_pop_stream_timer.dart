@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:pop_pop/pop_pop.dart';
 import 'package:rxdart/subjects.dart';
+
+export '../extensions/pop_pop_stream_timer_extensions.dart';
 
 class PopPopStreamTimer extends PopPopTimer<int> {
   final _timerState = BehaviorSubject<int>();
@@ -61,8 +64,10 @@ class PopPopStreamTimer extends PopPopTimer<int> {
 
   void _log(String message) {
     if (enableLogging) {
-      // ignore: avoid_print
-      print('$this $message');
+      debugPrint('$this $message');
     }
   }
+
+  @override
+  String toString() => '::PopPopStreamTimer::';
 }
