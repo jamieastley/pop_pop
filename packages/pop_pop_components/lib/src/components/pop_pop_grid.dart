@@ -45,78 +45,80 @@ class PopPopGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          print(
-              'Available constraints: ${constraints.maxWidth.floor()}w : ${constraints.maxHeight.floor()}h');
-          final columnChildrenCount =
-              (constraints.maxHeight / bubbleSize).floor();
-          final rowChildrenCount = (constraints.maxWidth / bubbleSize).floor();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        print(
+            'Available constraints: ${constraints.maxWidth.floor()}w : ${constraints.maxHeight.floor()}h');
+        final columnChildrenCount =
+            (constraints.maxHeight / bubbleSize).floor();
+        final rowChildrenCount = (constraints.maxWidth / bubbleSize).floor();
 
-          final bottomOffset =
-              constraints.maxHeight - (columnChildrenCount * bubbleSize);
+        final bottomOffset =
+            constraints.maxHeight - (columnChildrenCount * bubbleSize);
 
-          onGridInit.call(
-            rowChildrenCount,
-            columnChildrenCount,
-            bottomOffset,
-          );
+        onGridInit.call(
+          rowChildrenCount,
+          columnChildrenCount,
+          bottomOffset,
+        );
 
-          return ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: controller,
-            scrollDirection: scrollDirection,
-            itemBuilder: (context, listViewIndex) {
-              final bottomPaddingValue = _isFinalColumn(
-                index: listViewIndex,
-                columnChildrenCount: columnChildrenCount,
-              )
-                  ? bottomOffset
-                  : 0.0;
-              if (listViewIndex % 2 == 0 &&
-                  gridMode == PopPopGridMode.staggered) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: bottomPaddingValue,
-                  ),
-                  child: SizedBox(
-                    width: constraints.maxWidth,
-                    height: bubbleSize,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List<Widget>.generate(
-                        (rowChildrenCount - 1),
-                        (columnIndex) =>
-                            onGenerateBubble('$listViewIndex-$columnIndex'),
+        return CustomScrollView(
+          controller: controller,
+          scrollDirection: scrollDirection,
+          physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, listViewIndex) {
+                  final bottomPaddingValue = _isFinalColumn(
+                    index: listViewIndex,
+                    columnChildrenCount: columnChildrenCount,
+                  )
+                      ? bottomOffset
+                      : 0.0;
+
+                  if (gridMode == PopPopGridMode.staggered &&
+                      listViewIndex % 2 == 0) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: bottomPaddingValue),
+                      child: SizedBox(
+                        width: constraints.maxWidth,
+                        height: bubbleSize,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List<Widget>.generate(
+                            (rowChildrenCount - 1),
+                            (columnIndex) =>
+                                onGenerateBubble('$listViewIndex-$columnIndex'),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              } else {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: bottomPaddingValue,
-                  ),
-                  child: SizedBox(
-                    width: constraints.maxWidth,
-                    height: bubbleSize,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List<Widget>.generate(
-                          rowChildrenCount,
-                          (columnIndex) =>
-                              onGenerateBubble('$listViewIndex-$columnIndex')),
-                    ),
-                  ),
-                );
-              }
-            },
-          );
-        },
-      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: bottomPaddingValue),
+                      child: SizedBox(
+                        width: constraints.maxWidth,
+                        height: bubbleSize,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: List<Widget>.generate(
+                            rowChildrenCount,
+                            (columnIndex) =>
+                                onGenerateBubble('$listViewIndex-$columnIndex'),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
