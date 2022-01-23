@@ -1,0 +1,40 @@
+name: pop_pop_components_analyze
+
+on:
+  push:
+    tags-ignore:
+      - "pop_pop*"
+    paths:
+      - "packages/pop_pop_components/**"
+      - ".github/workflows/pop_pop_components_analyze.yaml"
+
+  pull_request:
+    paths:
+      - "packages/pop_pop_components/**"
+      - ".github/workflows/pop_pop_components_analyze.yaml"
+
+jobs:
+  analyze:
+    defaults:
+      run:
+        working-directory: packages/pop_pop_components
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
