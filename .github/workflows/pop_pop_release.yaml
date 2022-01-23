@@ -1,7 +1,7 @@
 name: pop_pop_release
 
 on:
-  push:
+  create:
     tags:
       - "^pop_pop-v[0-9]+.[0-9]+.[0-9]+.*$"
 
