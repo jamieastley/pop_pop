@@ -7,6 +7,7 @@ class PoppedBubblePainter extends StatelessWidget {
   /// properties required to style the bubble.
   final PopPopBubbleTheme themeModel;
 
+  // coverage:ignore-start
   /// Creates a [PoppedBubblePainter].
   ///
   /// Internally calculates and paints the dimensions of a popped bubble from
@@ -15,6 +16,7 @@ class PoppedBubblePainter extends StatelessWidget {
     Key? key,
     required this.themeModel,
   }) : super(key: key);
+  // coverage:ignore-end
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,8 @@ class _Painter extends CustomPainter {
     );
   }
 
+  // coverage:ignore-start
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => oldDelegate != this;
+  // coverage:ignore-end
 }

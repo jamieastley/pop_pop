@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:pop_pop/pop_pop.dart';
+import 'package:pop_pop_components/src/utils/pop_pop_utils.dart';
 
 /// Creates a [CustomPainter] to paint the effect of a bubble
 /// with parallel reflective effects .
@@ -110,8 +109,8 @@ class _Painter extends CustomPainter {
     );
   }
 
+// coverage:ignore-start
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => oldDelegate != this;
+  // coverage:ignore-end
 }
-
-double degToRad(double deg) => deg * (pi / 180.0);
