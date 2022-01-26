@@ -1,86 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:pop_pop/pop_pop.dart';
-import 'package:pop_pop_components/bubble_painters.dart';
 import 'package:provider/provider.dart';
 
 /// A bubble painter, state-managed via Provider's [ChangeNotifierProvider].
 ///
 /// Internally calls `Provider.of<PopPop>`
 class ProviderBubble extends StatelessWidget {
-  /// Appends an identifying [String] to the end of
-  /// the bubbles [ValueKey] value.
+  /// Sets the [Widget] for an unpopped bubble.
   ///
-  /// Should typically be the value of the bubbles position
-  /// within the game grid.
-  /// ```dart
-  /// String keySuffix = '0-0';
-  /// ```
-  final String keySuffix;
+  /// This can either be the package-provided painter bubbles, or your own
+  /// bubble widget design.
+  final Widget unpoppedBubble;
 
-  /// Creates an encapsulated [ChangeNotifierBubble].
+  /// Sets the [Widget] for an popped bubble.
+  ///
+  /// This can either be the package-provided painter bubbles, or your own
+  /// bubble widget design.
+  final Widget poppedBubble;
+
+  /// Creates a Provider-based bubble, encapsulating [ChangeNotifierProvider] .
   ///
   /// [ChangeNotifier] is automatically handled and disposed
   /// of when the bubble no longer exists with the game grid (such
   /// as when the [ListView.builder] has scrolled down).
   const ProviderBubble({
     Key? key,
-    required this.keySuffix,
+    required this.unpoppedBubble,
+    required this.poppedBubble,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var bubbleGame = Provider.of<PopPop>(context, listen: false);
+    final popPop = Provider.of<PopPop>(context, listen: false);
 
-    return ChangeNotifierProvider<ChangeNotifierBubble>(
-      create: (context) => ChangeNotifierBubble(),
-      builder: (context, _) {
-        return SizedBox(
-          height: bubbleGame.bubbleTheme.size,
-          child: Consumer<ChangeNotifierBubble>(
-            builder: (context, value, _) {
-              return GestureDetector(
-                /// `onTap` is *ever* so slightly slower as it won't register
-                /// the pop until the users' finger has been lifted, so capture `onTapDown`
-                onTapDown: (_) {
-                  if (!value.isPopped) {
-                    value.popBubble();
-                    bubbleGame.onBubblePopped();
-                  }
-                },
-                child: value.isPopped
-                    ? PoppedBubblePainter(
-                        key: ValueKey('poppedBubble-$keySuffix'),
-                        themeModel: bubbleGame.bubbleTheme,
-                      )
-                    : ReflectiveBubblePainter(
-                        key: ValueKey('reflectiveBubble-$keySuffix'),
-                        themeModel: bubbleGame.bubbleTheme,
-                      ),
-              );
+    return ChangeNotifierProvider<_ChangeNotifierBubble>(
+      create: (context) => _ChangeNotifierBubble(),
+      builder: (context, _) => SizedBox(
+        height: popPop.bubbleTheme.size,
+        child: Consumer<_ChangeNotifierBubble>(
+          builder: (context, value, _) => GestureDetector(
+            /// `onTap` is *ever* so slightly slower as it won't register
+            /// the pop until the users' finger has been lifted, so capture `onTapDown`
+            onTapDown: (_) {
+              if (!value.isPopped) {
+                value.popBubble();
+                popPop.onBubblePopped();
+              }
             },
+            child: value.isPopped ? poppedBubble : unpoppedBubble,
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
 
-class ChangeNotifierBubble extends ChangeNotifier implements PopPopBubbleModel {
+class _ChangeNotifierBubble extends ChangeNotifier
+    implements PopPopBubbleModel {
   bool _isPopped = false;
 
   @override
   bool get isPopped => _isPopped;
 
-  ChangeNotifierBubble();
+  _ChangeNotifierBubble();
 
   @override
   void popBubble() {
     _isPopped = true;
-    notifyListeners();
-  }
-
-  void reset() {
-    _isPopped = false;
     notifyListeners();
   }
 }
