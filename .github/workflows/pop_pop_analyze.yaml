@@ -2,8 +2,6 @@ name: pop_pop_analyze
 
 on:
   push:
-    tags-ignore:
-      - "pop_pop*"
     paths:
       - "packages/pop_pop/**"
       - ".github/workflows/pop_pop_analyze.yaml"
