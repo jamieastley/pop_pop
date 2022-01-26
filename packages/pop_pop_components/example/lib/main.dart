@@ -1,5 +1,7 @@
+import 'package:example/pop_pop_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:pop_pop/pop_pop.dart';
+import 'package:pop_pop_components/bubble_painters.dart';
 import 'package:pop_pop_components/pop_pop_components.dart';
 import 'package:pop_pop_components/provider_bubble.dart';
 import 'package:provider/provider.dart';
@@ -52,8 +54,8 @@ class _AppState extends State<App> {
           timer: PopPopStreamTimer(
             seconds: App.timerDuration,
           )),
-      dispose: (context, value) => value.dispose(),
       child: _PopPopView(controller: controller),
+      dispose: (context, value) => value.dispose(),
     );
   }
 }
@@ -152,8 +154,16 @@ class _BuildGameReadyState extends StatelessWidget {
                   bottomOffset: bottomOffset,
                 ),
                 controller: controller,
-                onGenerateBubble: (sliverIndex, rowIndex) =>
-                    ProviderBubble(keySuffix: '$sliverIndex-$rowIndex'),
+                onGenerateBubble: (sliverIndex, rowIndex) => ProviderBubble(
+                  poppedBubble: PoppedBubblePainter(
+                    key: ValueKey('poppedBubble-$sliverIndex-$rowIndex'),
+                    themeModel: popPop.bubbleTheme,
+                  ),
+                  unpoppedBubble: ReflectiveBubblePainter(
+                    key: ValueKey('reflectiveBubble-$sliverIndex-$rowIndex'),
+                    themeModel: popPop.bubbleTheme,
+                  ),
+                ),
               ),
             ),
           ),
@@ -177,7 +187,7 @@ class _BuildFinishedState extends StatelessWidget {
       child: SafeArea(
         child: Flex(
           direction: Axis.vertical,
-          children: <Widget>[
+          children: [
             Expanded(
               child: Stack(
                 children: [
