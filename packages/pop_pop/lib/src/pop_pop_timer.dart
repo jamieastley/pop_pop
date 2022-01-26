@@ -9,10 +9,13 @@ abstract class PopPopTimer<T extends Object> {
   /// Initialises the timer with the given `seconds` value.
   final int seconds;
 
-  /// Sets whether the lib should print debug logs.
-  final bool enableLogging;
+  /// Sets whether debug logging should be enabled.
+  final bool loggingEnabled;
 
-  const PopPopTimer({required this.seconds, this.enableLogging = false});
+  const PopPopTimer({
+    required this.seconds,
+    this.loggingEnabled = false,
+  });
 
   /// Starts the timer countdown.
   void startTimer();

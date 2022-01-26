@@ -8,7 +8,7 @@ abstract class PopPopAudio {
 
   /// Sets whether the [PopPopAudio] implementation should
   /// enable debug logging.
-  final bool enableLogging;
+  final bool loggingEnabled;
 
   /// Creates a [PopPopAudio] interface.
   ///
@@ -16,7 +16,7 @@ abstract class PopPopAudio {
   /// player implemention with your preferred audio player package.
   const PopPopAudio({
     required this.defaultFilePath,
-    this.enableLogging = false,
+    this.loggingEnabled = false,
   });
 
   /// Initialise any resources required by the [PopPopAudio] implementation.

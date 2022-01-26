@@ -31,8 +31,8 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
   /// Optional timer interface for timed game modes.
   final PopPopTimer<T>? timer;
 
-  /// Enable library debug logging.
-  final bool isLoggingEnabled;
+  /// Sets whether debug logging should be enabled.
+  final bool loggingEnabled;
 
   /// Creates an implementation of a [PopPop].
   ///
@@ -42,7 +42,7 @@ abstract class PopPop<S extends PopPopState, T extends Object> {
     required this.bubbleTheme,
     this.audioPlayer,
     this.timer,
-    this.isLoggingEnabled = false,
+    this.loggingEnabled = false,
   });
 
   /// Cache the generated grid size/count for the device.
