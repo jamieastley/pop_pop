@@ -10,19 +10,17 @@ void main() {
 
   group('PoppedBubblePainter:', () {
     testWidgets('Ensure widget is rendered within the given bounds',
-        (WidgetTester tester) async {
+        (tester) async {
       tester.binding.window.physicalSizeTestValue = const Size(size, size);
       tester.binding.window.devicePixelRatioTestValue = 1.0;
-
-      const widget = PoppedBubblePainter(
-        key: key,
-        themeModel: model,
-      );
 
       await tester.pumpWidget(
         const MediaQuery(
           data: MediaQueryData(),
-          child: widget,
+          child: PoppedBubblePainter(
+            key: key,
+            themeModel: model,
+          ),
         ),
       );
       await tester.pumpAndSettle();

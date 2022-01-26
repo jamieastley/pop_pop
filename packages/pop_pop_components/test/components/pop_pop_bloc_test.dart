@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pop_pop/pop_pop.dart';
-import 'package:pop_pop_components/src/components/pop_pop_audio_player.dart';
 import 'package:pop_pop_components/src/components/pop_pop_bloc.dart';
 
 class MockTimer extends Mock implements PopPopTimer<int> {}
 
-class MockAudio extends Mock implements PopPopAudioPlayer {}
+class MockAudio extends Mock implements PopPopAudio {}
 
 void main() {
   late PopPopBloc bloc;
   final PopPopTimer<int> timer = MockTimer();
-  final PopPopAudioPlayer audioPlayer = MockAudio();
+  final PopPopAudio audioPlayer = MockAudio();
 
   setUp(() {
     when(() => timer.startTimer()).thenReturn(null);
