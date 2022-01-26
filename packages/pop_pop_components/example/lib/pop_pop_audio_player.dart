@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pop_pop/pop_pop.dart';
 
 class PopPopAudioPlayer extends PopPopAudio {
@@ -7,10 +8,10 @@ class PopPopAudioPlayer extends PopPopAudio {
 
   PopPopAudioPlayer({
     required String filePath,
-    bool enableLogging = false,
+    bool loggingEnabled = false,
   }) : super(
           defaultFilePath: filePath,
-          enableLogging: enableLogging,
+          loggingEnabled: loggingEnabled,
         ) {
     init();
   }
@@ -42,9 +43,8 @@ class PopPopAudioPlayer extends PopPopAudio {
   }
 
   void _log(String message) {
-    if (enableLogging) {
-      // ignore: avoid_print
-      print('$this $message');
+    if (loggingEnabled) {
+      debugPrint('$this $message');
     }
   }
 

@@ -48,7 +48,7 @@ class PopPopBloc extends PopPop<PopPopState, int> {
           bubbleTheme: bubbleTheme,
           audioPlayer: audioPlayer,
           timer: timer,
-          isLoggingEnabled: loggingEnabled,
+          loggingEnabled: loggingEnabled,
         );
 
   @override
@@ -106,7 +106,7 @@ class PopPopBloc extends PopPop<PopPopState, int> {
   }
 
   void _log(String message) {
-    if (isLoggingEnabled) {
+    if (loggingEnabled) {
       debugPrint('$this $message');
     }
   }

@@ -16,7 +16,7 @@ void main() {
       const seconds = 7;
       timer = PopPopStreamTimer(
         seconds: seconds,
-        enableLogging: true,
+        loggingEnabled: true,
       )..startTimer();
 
       await expectLater(timer.countdownTimerStream,
@@ -27,7 +27,7 @@ void main() {
       const seconds = 7;
       timer = PopPopStreamTimer(
         seconds: seconds,
-        enableLogging: true,
+        loggingEnabled: true,
       )..startTimer();
 
       timer.countdownTimerStream.listen((event) {
@@ -49,7 +49,7 @@ void main() {
       final completer = Completer<void>();
       timer = PopPopStreamTimer(
         seconds: seconds,
-        enableLogging: true,
+        loggingEnabled: true,
       )..startTimer();
 
       timer.countdownTimerStream.listen((event) {
@@ -72,7 +72,7 @@ void main() {
       final completer = Completer<void>();
       timer = PopPopStreamTimer(
         seconds: seconds,
-        enableLogging: true,
+        loggingEnabled: true,
       )..startTimer();
 
       timer.countdownTimerStream.listen((event) {

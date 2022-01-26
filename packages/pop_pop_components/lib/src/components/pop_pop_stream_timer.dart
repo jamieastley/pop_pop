@@ -16,8 +16,11 @@ class PopPopStreamTimer extends PopPopTimer<int> {
 
   PopPopStreamTimer({
     int seconds = 60,
-    bool enableLogging = false,
-  }) : super(seconds: seconds, enableLogging: enableLogging);
+    bool loggingEnabled = false,
+  }) : super(
+          seconds: seconds,
+          loggingEnabled: loggingEnabled,
+        );
 
   @override
   void pauseTimer() {
@@ -63,7 +66,7 @@ class PopPopStreamTimer extends PopPopTimer<int> {
   }
 
   void _log(String message) {
-    if (enableLogging) {
+    if (loggingEnabled) {
       debugPrint('$this $message');
     }
   }

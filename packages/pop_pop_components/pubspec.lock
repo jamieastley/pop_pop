@@ -255,7 +255,7 @@ packages:
       name: pop_pop
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-alpha.3"
+    version: "1.0.0"
   provider:
     dependency: "direct main"
     description:

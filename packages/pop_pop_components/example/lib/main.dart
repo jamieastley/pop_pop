@@ -49,7 +49,7 @@ class _AppState extends State<App> {
           },
           audioPlayer: PopPopAudioPlayer(
             filePath: 'mp3/pop.mp3',
-            enableLogging: true,
+            loggingEnabled: true,
           ),
           timer: PopPopStreamTimer(
             seconds: App.timerDuration,
