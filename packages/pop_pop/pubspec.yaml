@@ -1,6 +1,6 @@
 name: pop_pop
 description: Flexible and extendable components to build a bubble pop game in Flutter.
-version: 1.0.0-alpha.4
+version: 1.0.0-alpha.5
 homepage: https://github.com/jamieastley/pop_pop
 
 environment:
