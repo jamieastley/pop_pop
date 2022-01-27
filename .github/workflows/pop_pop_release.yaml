@@ -1,4 +1,4 @@
-name: pop_pop_release
+name: pop_pop
 
 on:
   push:
