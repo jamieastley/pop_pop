@@ -1,4 +1,4 @@
-# <img src="../../docs/bubbles.png" alt="bubbles" width="30"/> pop_pop <img src="../../docs/bubbles.png" alt="bubbles" width="30"/>
+# <img src="https://github.com/jamieastley/pop_pop/raw/master/docs/bubbles.png" alt="bubbles" width="30"/> pop_pop <img src="https://github.com/jamieastley/pop_pop/raw/master/docs/bubbles.png" alt="bubbles" width="30"/>
 
 <p align="left">
 <a href="https://pub.dev/packages/pop_pop"><img src="https://img.shields.io/pub/v/pop_pop.svg" alt="Pub"></a>
