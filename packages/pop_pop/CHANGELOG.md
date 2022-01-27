@@ -1,3 +1,8 @@
+# 1.0.0 
+
+- Initial stable release.
+
+
 # 1.0.0-alpha.5 
 
 - docs(pop_pop): fix README
