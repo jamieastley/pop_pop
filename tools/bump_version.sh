@@ -77,7 +77,7 @@ if [ -f ${PACKAGE_PATH}/VERSION ]; then
     read
     echo "$PUSHING_MSG"
     git add ${PACKAGE_PATH}/CHANGELOG.md ${PACKAGE_PATH}/VERSION ${PACKAGE_PATH}/pubspec.yaml &&
-	git commit -m "${1}-v${NEW_VERSION}" -m "- Update \`CHANGELOG.md\` and \`pubspec.yaml\`" && 
+	git commit -m "chore(${1}): v${NEW_VERSION}" -m "- Update \`CHANGELOG.md\` and \`pubspec.yaml\`" && 
 	git tag -a -m "${1}-v${NEW_VERSION}" "${1}-v${NEW_VERSION}"
 else
     echo "${WARNING_FLAG} Could not find a VERSION file."
@@ -107,7 +107,7 @@ else
         read
         echo "$PUSHING_MSG"
         git add ${PACKAGE_PATH}/CHANGELOG.md ${PACKAGE_PATH}/VERSION ${PACKAGE_PATH}/pubspec.yaml &&
-        git commit -m "${1}-v0.1.0" -m "- Update \`CHANGELOG.md\` and \`pubspec.yaml\` " && 
+        git commit -m "chore(${1}): v0.1.0" -m "- Update \`CHANGELOG.md\` and \`pubspec.yaml\` " && 
 		git tag -a -m "${1}-v0.1.0" "${1}-v0.1.0" 
     fi
 fi

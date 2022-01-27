@@ -14,7 +14,7 @@ if [[ $url =~ $re ]]; then
 
 	# Generates a markdown-friendly changelog by rendering commit hashes and JIRA project codes as hyperlinks.
 	# `$1` = commit to...from ref
-	git log --pretty=format:'<li> (<a href="https://github.com/'$user'/'$repo'/commits/%H">%h</a>) - %s</li> ' --no-merges $1
+	git log --pretty=format:'- %s' --no-merges $1
 else 
 	exit 1
 fi
