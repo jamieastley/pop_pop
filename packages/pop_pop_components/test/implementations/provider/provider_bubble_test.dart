@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -26,6 +28,7 @@ void main() {
   group('ProviderBubble:', () {
     testWidgets('Verify that popped bubble widget is found when popping bubble',
         (tester) async {
+      final completer = Completer<void>();
       await tester.pumpWidget(
         _TestAppWrapper(
           bloc: mockBloc,
@@ -42,6 +45,7 @@ void main() {
               height: mockBloc.bubbleTheme.size,
               width: mockBloc.bubbleTheme.size,
             ),
+            onPopped: () => completer.complete(),
           ),
         ),
       );
@@ -49,6 +53,7 @@ void main() {
       await tester.tap(find.byKey(const Key(unpoppedKey)));
       await tester.pumpAndSettle();
 
+      expect(completer.isCompleted, isTrue);
       expect(find.byKey(const Key(poppedKey)), findsOneWidget);
       expect(find.byKey(const Key(unpoppedKey)), findsNothing);
     });

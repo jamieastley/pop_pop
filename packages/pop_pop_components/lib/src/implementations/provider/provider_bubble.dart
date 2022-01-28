@@ -18,6 +18,10 @@ class ProviderBubble extends StatelessWidget {
   /// bubble widget design.
   final Widget poppedBubble;
 
+  final VoidCallback onPopped;
+
+  final PopPopBubbleTheme bubbleTheme;
+
   /// Creates a Provider-based bubble, encapsulating [ChangeNotifierProvider] .
   ///
   /// [ChangeNotifier] is automatically handled and disposed
@@ -27,16 +31,16 @@ class ProviderBubble extends StatelessWidget {
     Key? key,
     required this.unpoppedBubble,
     required this.poppedBubble,
+    required this.onPopped,
+    this.bubbleTheme = const PopPopBubbleTheme(),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final popPop = Provider.of<PopPop>(context, listen: false);
-
     return ChangeNotifierProvider<_ChangeNotifierBubble>(
       create: (context) => _ChangeNotifierBubble(),
       builder: (context, _) => SizedBox(
-        height: popPop.bubbleTheme.size,
+        height: bubbleTheme.size,
         child: Consumer<_ChangeNotifierBubble>(
           builder: (context, value, _) => GestureDetector(
             /// `onTap` is *ever* so slightly slower as it won't register
@@ -44,7 +48,7 @@ class ProviderBubble extends StatelessWidget {
             onTapDown: (_) {
               if (!value.isPopped) {
                 value.popBubble();
-                popPop.onBubblePopped();
+                onPopped();
               }
             },
             child: value.isPopped ? poppedBubble : unpoppedBubble,
