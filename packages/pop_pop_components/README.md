@@ -7,7 +7,7 @@
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 </p>
 
-Extends upon [pop_pop](https://pub.dev/pop_pop) to provide out of the box components to implement a bubble popping game in Flutter.
+Extends upon [pop_pop](https://pub.dev/packages/pop_pop) to provide out of the box components to implement a bubble popping game in Flutter.
 
 ## Getting Started
 
@@ -42,9 +42,6 @@ A [provider](https://pub.dev/provider) based bubble wrapper that encapsulates ea
 
 `CustomPainter` based bubble UI widgets. Builds their colors based upon the given `PopPopBubbleTheme`.
 
-
-
-###
 
 ## Feedback/Suggestions?
 
