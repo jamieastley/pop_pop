@@ -35,9 +35,8 @@ class _AppState extends State<App> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Provider<PopPop>(
-      create: (context) => PopPopBloc(
+  Widget build(BuildContext context) => Provider<PopPopBloc>(
+        create: (context) => PopPopBloc(
           onAllPopped: (scrollDistance) {
             if (controller.hasClients) {
               controller.animateTo(
@@ -51,13 +50,11 @@ class _AppState extends State<App> {
             filePath: 'mp3/pop.mp3',
             loggingEnabled: true,
           ),
-          timer: PopPopStreamTimer(
-            seconds: App.timerDuration,
-          )),
-      child: _PopPopView(controller: controller),
-      dispose: (context, value) => value.dispose(),
-    );
-  }
+          timer: PopPopStreamTimer(seconds: App.timerDuration),
+        ),
+        child: _PopPopView(controller: controller),
+        dispose: (context, value) => value.dispose(),
+      );
 }
 
 class _PopPopView extends StatelessWidget {
@@ -70,7 +67,7 @@ class _PopPopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final popPop = Provider.of<PopPop>(context);
+    final popPop = Provider.of<PopPopBloc>(context);
 
     return Scaffold(
       body: StreamBuilder(
@@ -95,7 +92,7 @@ class _PopPopView extends StatelessWidget {
 }
 
 class _BuildGameReadyState extends StatelessWidget {
-  final PopPop popPop;
+  final PopPopBloc popPop;
   final ScrollController controller;
   const _BuildGameReadyState({
     Key? key,
@@ -113,19 +110,23 @@ class _BuildGameReadyState extends StatelessWidget {
             height: 50,
             child: Stack(
               children: [
-                // Align(
-                //   alignment: Alignment.topCenter,
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: AnimatedCountdownWheel(
-                //       duration: Duration(seconds: BubblePopping.timerDuration),
-                //       foregroundColor: Theme.of(context).colorScheme.primary,
-                //       backgroundColor:
-                //           bubbleGame.bubbleTheme.gridBackgroundColor,
-                //       size: Size(32, 32),
-                //     ),
-                //   ),
-                // ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, left: 16.0),
+                    child: StreamBuilder<int>(
+                      stream: popPop.timer!.countdownTimerStream,
+                      initialData: 0,
+                      builder: (context, snapshot) => Text(
+                        _formatTime(snapshot.data!),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontSize: 30),
+                      ),
+                    ),
+                  ),
+                ),
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
@@ -133,11 +134,13 @@ class _BuildGameReadyState extends StatelessWidget {
                     child: StreamBuilder(
                       stream: popPop.currentScoreStream,
                       initialData: 0,
-                      builder: (context, score) => Text('${score.data}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontSize: 30)),
+                      builder: (context, score) => Text(
+                        '${score.data}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontSize: 30),
+                      ),
                     ),
                   ),
                 ),
@@ -163,6 +166,8 @@ class _BuildGameReadyState extends StatelessWidget {
                     key: ValueKey('reflectiveBubble-$sliverIndex-$rowIndex'),
                     themeModel: popPop.bubbleTheme,
                   ),
+                  bubbleTheme: popPop.bubbleTheme,
+                  onPopped: () => popPop.onBubblePopped(),
                 ),
               ),
             ),
@@ -170,6 +175,12 @@ class _BuildGameReadyState extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _formatTime(int seconds) {
+    final minutesStr = ((seconds / 60) % 60).floor().toString().padLeft(2, '0');
+    final secondsStr = (seconds % 60).floor().toString().padLeft(2, '0');
+    return '$minutesStr:$secondsStr';
   }
 }
 
@@ -183,7 +194,7 @@ class _BuildFinishedState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.lightBlue,
+      color: Colors.white,
       child: SafeArea(
         child: Flex(
           direction: Axis.vertical,
@@ -197,16 +208,16 @@ class _BuildFinishedState extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 40.0),
                       child: Text(
                         'You popped $totalScore bubbles!',
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.headline3,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
                   Center(
                     child: TextButton(
-                      key: const Key('BdiButton-next'),
                       child: const Text('Play again'),
                       onPressed: () {
-                        Provider.of<PopPop>(context, listen: false)
+                        Provider.of<PopPopBloc>(context, listen: false)
                             .restartGame();
                       },
                     ),
@@ -214,20 +225,6 @@ class _BuildFinishedState extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                // childPadding: const EdgeInsets.only(bottom: 18.0),
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextButton(
-                    key: const Key('BdiButton-skip'),
-                    child: const Text('Close'),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),
