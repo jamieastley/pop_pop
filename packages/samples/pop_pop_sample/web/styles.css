@@ -1,0 +1,70 @@
+@media (prefers-color-scheme: light) {
+	body {
+		background-color: rgba(203, 243, 248, 255);
+	}
+
+	.roundBubble {
+		stroke: black;
+		stroke-width: 1px;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #212121;
+	}
+
+	.roundBubble {
+		stroke: white;
+		stroke-width: 1px;
+	}
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.bubbles {
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	position: absolute;
+	width: 150px;
+	height: 150px;
+}
+
+.roundBubble {
+	-webkit-animation: fade 2s linear infinite;
+	animation: fade 2s linear infinite;
+}
+
+
+@-webkit-keyframes fade {
+
+	0%,
+	100% {
+		opacity: 0
+	}
+
+	50% {
+		opacity: 1
+	}
+}
+
+@keyframes fade {
+
+	0%,
+	100% {
+		opacity: 0
+	}
+
+	50% {
+		opacity: 1
+	}
+}

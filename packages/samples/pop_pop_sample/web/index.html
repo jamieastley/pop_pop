@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <!--
+	<!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,91 +15,107 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+	<base href="$FLUTTER_BASE_HREF">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+	<meta charset="UTF-8">
+	<title>Pop Pop</title>
+	<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+	<meta name="description" content="A demo project implementing the base pop_pop and components packages.">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="pop_pop_sample">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+	<!-- iOS meta tags & icons -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Pop Pop">
+	<link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="icons/bubble-loader.svg" />
 
-  <title>pop_pop_sample</title>
-  <link rel="manifest" href="manifest.json">
+	<title>pop_pop_sample</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
+
+	<div class="loading">
+		<svg class="bubbles" fill="none" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
+			<path d="m0 0h48v48h-48z" />
+			<g class="roundBubble" fill="#00BCD4" stroke="#000" stroke-linecap="round" stroke-linejoin="round"
+				stroke-width="2">
+				<circle cx="34" cy="14" r="9" />
+				<circle cx="12" cy="25" r="7" />
+				<circle cx="29" cy="37" r="5" />
+			</g>
+		</svg>
+	</div>
+	<!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    var serviceWorkerVersion = null;
-    var scriptLoaded = false;
-    function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-    }
+	<script>
+		var serviceWorkerVersion = null;
+		var scriptLoaded = false;
+		function loadMainDartJs() {
+			if (scriptLoaded) {
+				return;
+			}
+			scriptLoaded = true;
+			var scriptTag = document.createElement('script');
+			scriptTag.src = 'main.dart.js';
+			scriptTag.type = 'application/javascript';
+			document.body.append(scriptTag);
+		}
 
-    if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
+		if ('serviceWorker' in navigator) {
+			// Service workers are supported. Use them.
+			window.addEventListener('load', function () {
+				// Wait for registration to finish before dropping the <script> tag.
+				// Otherwise, the browser will load the script multiple times,
+				// potentially different versions.
+				var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+				navigator.serviceWorker.register(serviceWorkerUrl)
+					.then((reg) => {
+						function waitForActivation(serviceWorker) {
+							serviceWorker.addEventListener('statechange', () => {
+								if (serviceWorker.state == 'activated') {
+									console.log('Installed new service worker.');
+									loadMainDartJs();
+								}
+							});
+						}
+						if (!reg.active && (reg.installing || reg.waiting)) {
+							// No active web worker and we have installed or are installing
+							// one for the first time. Simply wait for it to activate.
+							waitForActivation(reg.installing || reg.waiting);
+						} else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+							// When the app updates the serviceWorkerVersion changes, so we
+							// need to ask the service worker to update.
+							console.log('New service worker available.');
+							reg.update();
+							waitForActivation(reg.installing);
+						} else {
+							// Existing service worker is still good.
+							console.log('Loading app from service worker.');
+							loadMainDartJs();
+						}
+					});
 
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plain <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadMainDartJs();
-          }
-        }, 4000);
-      });
-    } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
-    }
-  </script>
+				// If service worker doesn't succeed in a reasonable amount of time,
+				// fallback to plain <script> tag.
+				setTimeout(() => {
+					if (!scriptLoaded) {
+						console.warn(
+							'Failed to load app from service worker. Falling back to plain <script> tag.',
+						);
+						loadMainDartJs();
+					}
+				}, 4000);
+			});
+		} else {
+			// Service workers not supported. Just drop the <script> tag.
+			loadMainDartJs();
+		}
+	</script>
 </body>
+
 </html>
