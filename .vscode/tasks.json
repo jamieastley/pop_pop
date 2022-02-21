@@ -11,5 +11,24 @@
 			"group": "none",
 			"label": "Bump version: pop_pop"
 		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"options": {
+				"cwd": "packages/samples/pop_pop_sample"
+			},
+			"args": [
+				"pub",
+				"run",
+				"build_runner",
+				"build",
+				"--delete-conflicting-outputs"
+			],
+			"problemMatcher": [
+				"$dart-build_runner"
+			],
+			"group": "build",
+			"label": "pop_pop_sample: build_runner"
+		},
 	]
 }
