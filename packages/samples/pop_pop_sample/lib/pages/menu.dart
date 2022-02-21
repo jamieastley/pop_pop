@@ -28,6 +28,7 @@ class Menu extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
                   GetIt.I<AppConfig>().appVersion,
+                  key: Key(GetIt.I<AppConfig>().appVersion),
                   style: Theme.of(context).textTheme.caption,
                 ),
               ),
@@ -47,12 +48,15 @@ class _ButtonColumn extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             OutlinedButton(
+              key: const Key('play_button'),
               onPressed: () => GoRouter.of(context).goNamed(Game.routeName),
               child: const Text('Play'),
             ),
             if (GetIt.I<AppConfig>().isHighScoreEnabled)
               OutlinedButton(
-                  onPressed: () {}, child: const Text('High Scores')),
+                  key: const Key('high_scores_button'),
+                  onPressed: () {},
+                  child: const Text('High Scores')),
           ]
               .map(
                 (e) => Padding(
