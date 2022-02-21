@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:fimber/fimber.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
@@ -21,6 +23,10 @@ class Injector {
     required AppRunner appRunner,
   }) async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    if (kDebugMode) {
+      Fimber.plantTree(DebugTree(useColors: true));
+    }
 
     final config = await AppConfig.init(env: environment);
     GetIt.I.registerSingleton<AppConfig>(config);
