@@ -34,3 +34,11 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test --coverage
+        id: flutterTest
+
+      - name: Upload golden test failures
+        uses: actions/upload-artifact@v4
+        if: failure() && steps.flutterTest.outcome == 'failure'
+        with:
+          name: test-failures
+          path: packages/pop_pop/test/failures/
