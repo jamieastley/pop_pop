@@ -14,7 +14,7 @@ on:
       - ".github/workflows/**"
 
 jobs:
-  analyze_test:
+  test:
     defaults:
       run:
         working-directory: packages/pop_pop_components
@@ -34,8 +34,16 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test --coverage
+        id: flutterTest
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload golden test failures
+        uses: actions/upload-artifact@v4
+        if: failure() && steps.flutterTest.outcome == 'failure'
+        with:
+          name: test-failures
+          path: packages/pop_pop_components/test/failures/
