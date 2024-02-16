@@ -40,4 +40,4 @@ jobs:
         if: failure()
         with:
           name: test-failures
-          path: test/failures/
+          path: packages/pop_pop/test/failures/
