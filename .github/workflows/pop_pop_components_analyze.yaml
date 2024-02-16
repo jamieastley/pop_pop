@@ -4,12 +4,12 @@ on:
   push:
     paths:
       - "packages/pop_pop_components/**"
-      - ".github/workflows/pop_pop_components_analyze.yaml"
+      - ".github/workflows/**"
 
   pull_request:
     paths:
       - "packages/pop_pop_components/**"
-      - ".github/workflows/pop_pop_components_analyze.yaml"
+      - ".github/workflows/**"
 
 jobs:
   analyze_test:
