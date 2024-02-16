@@ -37,6 +37,7 @@ jobs:
 
       - name: Upload golden test failures
         uses: actions/upload-artifact@v4
+        if: failure()
         with:
           name: test-failures
           path: test/failures/
