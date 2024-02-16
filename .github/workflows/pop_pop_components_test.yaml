@@ -1,15 +1,17 @@
-name: pop_pop_components_analyze
+name: pop_pop_components_test
 
 on:
   push:
+    branches:
+      - master
     paths:
       - "packages/pop_pop_components/**"
-      - ".github/workflows/pop_pop_components_analyze.yaml"
+      - ".github/workflows/**"
 
   pull_request:
     paths:
       - "packages/pop_pop_components/**"
-      - ".github/workflows/pop_pop_components_analyze.yaml"
+      - ".github/workflows/**"
 
 jobs:
   analyze_test:
@@ -26,6 +28,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '2.8.1'
           channel: "stable"
 
       - run: flutter pub get
