@@ -5,11 +5,11 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "[Update pop_pop]"
+      prefix: "deps(pop_pop):"
 
   - package-ecosystem: "pub"
     directory: "/packages/pop_pop_components"
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "[Update pop_pop_components]"
+      prefix: "deps(pop_pop_components):"
