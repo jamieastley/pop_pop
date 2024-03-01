@@ -303,10 +303,10 @@ packages:
     dependency: "direct main"
     description:
       name: rxdart
-      sha256: "7358d9e183dd9002a16c17200186c7af56dd9e210b030853ca669ccd02e3d5d6"
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.2"
+    version: "0.27.7"
   shelf:
     dependency: transitive
     description:
