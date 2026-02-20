@@ -3,50 +3,46 @@ name: pop_pop
 on:
   push:
     tags:
-      - pop_pop-v[0-9]+.[0-9]+.[0-9]+*
+      - pop_pop-v[0-9]+.[0-9]+.[0-9]*
+
+defaults:
+  run:
+    working-directory: packages/pop_pop
 
 jobs:
-  pub_release:
-    defaults:
-      run:
-        working-directory: packages/pop_pop
-
+  analyze_test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.8.1'
-          channel: "stable"
+          flutter-version: '3.41.1'
+          channel: stable
 
       - run: flutter pub get
+
       - run: flutter analyze
 
-      - name: Setup Pub Credentials
-        shell: bash
-        env:
-          PUB_DEV_PUBLISH_ACCESS_TOKEN: ${{ secrets.PUB_DEV_PUBLISH_ACCESS_TOKEN }}
-          PUB_DEV_PUBLISH_REFRESH_TOKEN: ${{ secrets.PUB_DEV_PUBLISH_REFRESH_TOKEN }}
-          PUB_DEV_PUBLISH_TOKEN_ENDPOINT: ${{ secrets.PUB_DEV_PUBLISH_TOKEN_ENDPOINT }}
-          PUB_DEV_PUBLISH_EXPIRATION: ${{ secrets.PUB_DEV_PUBLISH_EXPIRATION }}
-        run: |
-          sh ../../tools/create_credentials.sh
+      - run: flutter test --coverage
 
-      - name: Check Publish Warnings
-        run: pub publish --dry-run
-        id: pubDryRun
+  publish_release:
+    needs: analyze_test
+    permissions:
+      id-token: write
 
-      - name: Publish Package
-        run: pub publish -f
-        if: steps.pubDryRun.outputs.exit_code == 0
-        id: pubPublish
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      environment: pub.dev
+
+  create_github_release:
+    needs: publish_release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        if: steps.pubPublish.outputs.exit_code == 0
+        uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
