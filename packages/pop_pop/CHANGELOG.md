@@ -1,3 +1,9 @@
+# 2.0.0-dev.1
+
+- **BREAKING**: chore: update minimum SDK constraint to Dart 3 (`>=3.0.0 <4.0.0`)
+- chore: update `flutter_lints` to `^6.0.0`
+- ci: publish via OIDC instead of repository secrets
+
 # 1.0.0 
 
 - Initial stable release.
