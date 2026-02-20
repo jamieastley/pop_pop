@@ -20,7 +20,7 @@ dev_dependencies:
   mocktail: ">=0.2.0 <2.0.0"
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: "3.11.0"
 
 flutter:
   uses-material-design: true
