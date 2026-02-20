@@ -19,17 +19,17 @@ jobs:
       run:
         working-directory: packages/pop_pop_components
 
-    runs-on: macos-11
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '2.8.1'
-          channel: "stable"
+          channel: stable
 
       - run: flutter pub get
       - run: flutter analyze
@@ -42,7 +42,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload golden test failures
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure() && steps.flutterTest.outcome == 'failure'
         with:
           name: test-failures
