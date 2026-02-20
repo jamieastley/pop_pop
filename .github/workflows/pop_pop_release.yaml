@@ -1,10 +1,6 @@
 name: Create pop_pop release
 
 on:
-  # TODO: remove after debug
-  pull_request:
-    branches:
-      - master
   push:
     tags:
       - pop_pop-v[0-9]+.[0-9]+.[0-9]*
@@ -22,17 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v4
         with:
           channel: stable
           version: ${{ env.FLUTTER_VERSION }}
-
       - run: flutter pub get
-
       - run: flutter analyze
-
       - run: flutter test --coverage
 
   publish_release:
@@ -42,7 +34,6 @@ jobs:
     environment: pub.dev
     permissions:
       id-token: write
-
     steps:
       - uses: actions/checkout@v6
       - uses: dart-lang/setup-dart@v1
@@ -52,19 +43,19 @@ jobs:
           channel: stable
           version: ${{ env.FLUTTER_VERSION }}
       - run: flutter pub get
-
       - name: Publish - dry run
         run: dart pub publish --dry-run
+      - name: Publish to pub.dev
+        run: dart pub publish -f
 
-# TODO: uncomment after debug
-#  create_github_release:
-#    name: Create GitHub Release
-#    needs: publish_release
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v6
-#
-#      - name: Create GitHub Release
-#        uses: softprops/action-gh-release@v2
-#        with:
-#          generate_release_notes: true
+  create_github_release:
+    name: Create GitHub Release
+    needs: publish_release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
