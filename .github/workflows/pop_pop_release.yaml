@@ -1,4 +1,4 @@
-name: pop_pop
+name: Create pop_pop release
 
 on:
   push:
@@ -11,6 +11,7 @@ defaults:
 
 jobs:
   analyze_test:
+    name: Analyze and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -28,6 +29,7 @@ jobs:
       - run: flutter test --coverage
 
   publish_release:
+    name: Publish to pub.dev
     needs: analyze_test
     permissions:
       id-token: write
@@ -35,8 +37,10 @@ jobs:
     uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
     with:
       environment: pub.dev
+      working-directory: packages/pop_pop
 
   create_github_release:
+    name: Create GitHub Release
     needs: publish_release
     runs-on: ubuntu-latest
     steps:
