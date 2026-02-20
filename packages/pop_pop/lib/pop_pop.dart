@@ -1,5 +1,3 @@
-library pop_pop;
-
 export 'src/pop_pop.dart';
 export 'src/pop_pop_audio.dart';
 export 'src/pop_pop_bubble_model.dart';

@@ -1,0 +1,44 @@
+name: Validate packages
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  validate_packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - packages/pop_pop
+    name: Validate ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.1'
+          channel: stable
+
+      - run: flutter pub get
+        working-directory: ${{ matrix.package }}
+
+      - run: flutter analyze
+        working-directory: ${{ matrix.package }}
+
+      - run: flutter test --coverage
+        id: flutterTest
+        working-directory: ${{ matrix.package }}
+
+      - name: Upload golden test failures
+        uses: actions/upload-artifact@v6
+        if: failure() && steps.flutterTest.outcome == 'failure'
+        with:
+          name: test-failures
+          path: ${{ matrix.package }}/test/failures/
