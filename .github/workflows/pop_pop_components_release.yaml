@@ -11,7 +11,7 @@ jobs:
       run:
         working-directory: packages/pop_pop_components
 
-    runs-on: macos-11
+    runs-on: macos-15
 
     steps:
       - name: Checkout repository
