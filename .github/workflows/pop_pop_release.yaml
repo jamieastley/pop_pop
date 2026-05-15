@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4
+        uses: flutter-actions/setup-flutter@v4.2
         with:
           channel: stable
           version: ${{ env.FLUTTER_VERSION }}
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: dart-lang/setup-dart@v1
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4
+        uses: flutter-actions/setup-flutter@v4.2
         with:
           channel: stable
           version: ${{ env.FLUTTER_VERSION }}
