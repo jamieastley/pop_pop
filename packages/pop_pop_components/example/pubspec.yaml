@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  audioplayers: ^0.20.1
+  audioplayers: ^6.0.0
   pop_pop: ^1.0.0-alpha.3
   pop_pop_components:
     path: ../
